@@ -2,6 +2,8 @@
 module.exports = {
   launch: {
     headless: false,
-    slowMo: 500
+    //slowMo: 300,
+    defaultViewport: null,
+    args: ['--start-maximized']
   }
 }
