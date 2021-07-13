@@ -21,17 +21,17 @@ describe('OceanPayment', () => {
       let i = 2;
       let cell = 'B' + i;
       while (worksheet.getCell(cell).value != null) {
-          id.push(worksheet.getCell(cell).value);
-          i++;
-          cell = 'B' + i;
+        id.push(worksheet.getCell(cell).value);
+        i++;
+        cell = 'B' + i;
       }
 
       i = 2;
       cell = 'C' + i;
       while (worksheet.getCell(cell).value != null) {
-          website.push(worksheet.getCell(cell).value);
-          i++;
-          cell = 'C' + i;
+        website.push(worksheet.getCell(cell).value);
+        i++;
+        cell = 'C' + i;
       }
 
       //console.log(id);
@@ -39,7 +39,7 @@ describe('OceanPayment', () => {
     });
 
     it('Prep work', async () => {
-      await page.waitForTimeout(15000);
+      await page.waitForTimeout(20000);
       const url = page.url();
       //expect(url.includes("/index")).toBe(true);
     },1000000);
@@ -77,7 +77,7 @@ describe('OceanPayment', () => {
         await page.click('li[class="select2-results__option select2-results__option--highlighted"]');
         //await page.waitForTimeout(1000);
         await page.click('input[value="Submit"]');
-        await page.waitForTimeout(2000);
+        await page.waitForTimeout(4000);
         //expect(url.includes("/merchant")).toBe(true);
         await page.click('button[id="mcBusinessStatusBtn"]');
         await page.waitForTimeout(5000);
@@ -106,12 +106,12 @@ describe('OceanPayment', () => {
         //console.log(content);
 
         const account = Array(content.length).fill(currId + "");
-        console.log(account);
+        //console.log(account);
 
         dataId = dataId.concat(account);
-        console.log(dataId);
+        //console.log(dataId);
         dataSite = dataSite.concat(content);
-        console.log(dataSite);
+        //console.log(dataSite);
 
         //sheet.getColumn(1).values = account;
         //sheet.getColumn(2).values = content;
