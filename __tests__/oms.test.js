@@ -79,7 +79,68 @@ describe('OceanPayment', () => {
         await page.click('input[value="Submit"]');
         await page.waitForTimeout(4000);
         //expect(url.includes("/merchant")).toBe(true);
-        await page.click('button[id="mcBusinessStatusBtn"]');
+
+        let buttonType = await page.evaluate(() => {
+          let el = document.querySelector('button[id="mcBusinessStatusBtn"]');
+          if(el == null) return false;
+          else return el.innerHTML == "Channel App(UDW)";
+        })
+
+        var links;
+        var content;
+        var account;
+        if(buttonType){
+          await page.click('button[id="mcBusinessStatusBtn"]');
+          await page.waitForTimeout(5000);
+          await page.click('a[href="#suggestionConfirm"]');
+  
+          var link = await page.$$eval('div > p', allAs => allAs.map((p => p.innerHTML)));
+  
+          //link = link.splice(45, 50);
+          //console.log(link);
+  
+          let i = 0;
+          while (!(link[i] + "").startsWith("https") && i < link.length) {
+            i++;
+          }
+  
+          if(i == link.length){
+            links = [];
+            content = [];
+          }else{
+            links = link[i];
+            content = links.split("<br>");
+            content = content.splice(0, content.length - 1);
+          }
+          //console.log(content);
+  
+          account = Array(content.length).fill(currId + "");
+          //console.log(account);
+  
+          dataId = dataId.concat(account);
+          //console.log(dataId);
+          dataSite = dataSite.concat(content);
+          //console.log(dataSite);
+  
+          //sheet.getColumn(1).values = account;
+          //sheet.getColumn(2).values = content;
+          sheet.getColumn(1).values = dataId;
+          sheet.getColumn(2).values = dataSite;
+          await workbook.xlsx.writeFile("links.xlsx");
+  
+          await page.click('button[id="backBtn"]');
+          await page.waitForTimeout(1000);
+        }else{
+          account = [currId + ""];
+          content = ["Manual Operation required"];
+          dataId = dataId.concat(account);
+          dataSite = dataSite.concat(content);
+          sheet.getColumn(1).values = dataId;
+          sheet.getColumn(2).values = dataSite;
+          await workbook.xlsx.writeFile("links.xlsx");
+        }
+
+        /*await page.click('button[id="mcBusinessStatusBtn"]');
         await page.waitForTimeout(5000);
         await page.click('a[href="#suggestionConfirm"]');
 
@@ -120,7 +181,7 @@ describe('OceanPayment', () => {
         await workbook.xlsx.writeFile("links.xlsx");
 
         await page.click('button[id="backBtn"]');
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(1000);*/
 
         //const clear = await page.$$('span[class="select2-selection__clear"]');
 
