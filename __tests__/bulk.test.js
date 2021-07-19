@@ -1,5 +1,13 @@
 const ExcelJS = require('exceljs');
 
+class RedirectionError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "RedirectionError";
+  }
+}
+
+
 describe('OceanPayment', () => {
     beforeAll(async () => {
       /*await page.setViewport({
@@ -7,7 +15,10 @@ describe('OceanPayment', () => {
         height: 1080,
         deviceScaleFactor: 1,
       });*/
-      await page.goto('https://oms.oceanpayment.com');
+      await page.goto('https://alim1.com', {"waitUntil" : "networkidle0"});
+      const url = page.url();
+      console.log(url);
+      if(url != 'https://alim1.com') throw new RedirectionError("URL Redirection");
     });
 
     it('Prep work', async () => {
@@ -16,7 +27,7 @@ describe('OceanPayment', () => {
         let el = document.querySelector('li[class="select2-selection__choice"]');
         return el ? el.innerText : false;
       })
-      console.log(productType);
+      //console.log(productType);
     },2147483647);
 
     /*it('Prep work', async () => {

@@ -4,7 +4,8 @@
   "description": "1. In your own words: Where would you fit your automated tests in your Bujo project development pipeline? (just write the letter)",
   "main": "babel.config.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "webCheck": "node ./__tests__/webCheck.js && python send.py"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,8 @@
     "verbose": true
   },
   "dependencies": {
-    "exceljs": "^4.2.1"
+    "exceljs": "^4.2.1",
+    "imap": "^0.8.19",
+    "mailparser": "^3.2.0"
   }
 }

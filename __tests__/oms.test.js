@@ -109,8 +109,14 @@ describe('OceanPayment', () => {
             content = [];
           }else{
             links = link[i];
+            //console.log(links);
             content = links.split("<br>");
             content = content.splice(0, content.length - 1);
+          }
+
+          for (let index = 1; index < content.length; index++) {
+            //console.log(typeof(content[index]));
+            content[index] = content[index].substring(1);
           }
           //console.log(content);
   
